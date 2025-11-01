@@ -39,3 +39,19 @@ export const getUserByEmail = async(req:Request,res:Response)=>{
 }
 
 
+export const createUser = async (req:Request, res:Response)=>{
+    const user = req.body
+    try {
+        
+        const userData = await userServices.createUser(user)
+
+        res.status(201).json(userData)
+        
+    } catch (error:any) {
+        if(error.message === 'User already exist'){
+            res.status(409).json({error:error.message})
+        }
+        
+        res.status(500).json({error:'Internal server error'})
+    }
+}
