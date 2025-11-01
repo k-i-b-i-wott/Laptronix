@@ -37,3 +37,5 @@ export const getUserByEmail = async(req:Request,res:Response)=>{
 
     }
 }
+
+
