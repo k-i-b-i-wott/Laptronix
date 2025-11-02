@@ -12,6 +12,10 @@ CREATE TABLE Users(
     updatedOn DATETIME2 DEFAULT SYSDATETIME()        
 )
 
+ALTER TABLE Users
+ADD verificationCode VARCHAR(6),
+    isVerified BIT DEFAULT 0
+
 INSERT INTO Users(firstName,lastName,userName,phoneNumber,emailAddress,passwordHash)
 VALUES('Brian','Kibiwott','Tanui','0718105315','bk.kibiwott@gmail.com','Tanui1234')
 
