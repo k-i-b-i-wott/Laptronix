@@ -40,6 +40,13 @@ export const setVerificationCode = async(emailAddress:string, code:string)=>{
     .input("verificationCode",code)
     .query("UPDATE Users SET verificationCode=@verificationCode WHERE emailAddress=@emailAddress");    
 }
+export const verifyUserEmail = async(emailAddress:string)=>{
+    const pool = await getPool()
+    const result = await pool.request()
+    .input("emailAddress",emailAddress)    
+    .query("UPDATE Users SET isVerified=1 WHERE emailAddress=@emailAddress");
+    return {message:"Email verified successfully"};
+}
 
 export const loginUser = async(emailAddress:string, passwordHash:string)=>{
     const pool = await getPool()

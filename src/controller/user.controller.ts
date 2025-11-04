@@ -55,6 +55,25 @@ export const createUser = async (req:Request, res:Response)=>{
     }
 }
 
+export const verifyEmail = async(req:Request,res:Response)=>{
+    const {emailAddress,code} = req.body;
+    try {
+        if(!emailAddress || !code){
+            return res.status(400).json({error:"Email address and code are required"})
+        }
+        const result = await userServices.verifyEmail(emailAddress,code)
+        res.status(200).json(result)
+        
+    } catch (error:any) {
+        if(error.message === 'User not found'){
+            res.status(404).json({error:error.message})
+        }else if(error.message === 'Invalid verification code'){
+            res.status(401).json({error:error.message})
+        }
+        res.status(500).json({error:"Internal server error", errorMessage:error.message} )
+    }
+}
+
 export const loginUser = async(req:Request,res:Response)=>{
     const {emailAddress,passwordHash}=req.body
 

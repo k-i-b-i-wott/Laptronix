@@ -19,9 +19,9 @@ export const emailTemplate ={
     verifyEmail : ( code:string )=>`
         <h1>Email Verification</h1>
         <p>Thank you for registering with LapTronix. Please verify your email address by clicking the link below:</p>
-        <a href="${code}">Verify Email</a>
+        <p>Your verification code is: <strong>${code}</strong></p>
         <p>If you didn't register for this account, please ignore this email.</p>
         <p>Best Regards,<br/>The LapTronix Team</p>
     `
-    
+
 }

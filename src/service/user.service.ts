@@ -50,6 +50,24 @@ export const createUser = async(user:newUser)=>{
 
 }
 
+export const verifyEmail = async(emailAddress:string, code:string)=>{
+    const user = await userRepositories.getUserByEmail(emailAddress);
+    if(!user) throw new Error ('User not found')
+    if(user.verificationCode !== code) throw new Error ('Invalid verification code')
+    const result = await userRepositories.verifyUserEmail(emailAddress)
+    try {
+        await  sendMail(
+            user.emailAddress,
+            "Verification Successful",
+            emailTemplate.welcome(user.firstName)
+        )
+       } catch (error) {
+        console.error('Error sending welcome email:', error);
+        return false;
+       }
+    return result
+}
+
 export const loginUser = async(emailAddress:string, passwordHash:string)=>{
     const user = await userRepositories.getUserByEmail(emailAddress);
     if(!user) throw new Error('User not found')
