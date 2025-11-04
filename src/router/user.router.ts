@@ -12,6 +12,7 @@ export const userRoutes =(app:any)=>{
     app.get('/users/:id',userController.getUserById)
     app.delete('/user/:id',userController.deleteUser)
     app.post('/user/verify',userController.verifyEmail)
+    app.patch('/user/:id',userController.updateUser)
 
 
 }

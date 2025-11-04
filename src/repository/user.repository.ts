@@ -1,6 +1,6 @@
 import { error } from "console";
 import { getPool } from "../db/config";
-import { newUser } from "../types/user.types";
+import { newUser, updateUser } from "../types/user.types";
 
 
 export const getAllUsers = async ()=>{
@@ -44,7 +44,7 @@ export const verifyUserEmail = async(emailAddress:string)=>{
     const pool = await getPool()
     const result = await pool.request()
     .input("emailAddress",emailAddress)    
-    .query("UPDATE Users SET isVerified=1 WHERE emailAddress=@emailAddress");
+    .query("UPDATE Users SET verificationCode=NULL, isVerified=1 WHERE emailAddress=@emailAddress");
     return {message:"Email verified successfully"};
 }
 
@@ -68,6 +68,23 @@ export const getUserById= async (id:number)=>{
     return user.recordset[0]||null
     
 }
+
+export const updateUserProfile =async (userData:updateUser)=>{
+    const pool = await getPool()
+    const result = await pool
+    .request()
+    .input("firstName",userData.firstName)
+    .input("lastName",userData.lastName)
+    .input("userName",userData.userName)
+    .input("emailAddress",userData.emailAddress)
+    .input("phoneNumber",userData.phoneNumber)
+    .input("profileImage",userData.profileImage)
+    .query('UPDATE Users SET firstName=@firstName, lastName=@lastName, userName=@userName, emailAddress=@emailAddress, phoneNumber=@phoneNumber, profileImage=@profileImage WHERE emailAddress=@emailAddress')
+    return result;
+}
+
+
+
 export const deleteUser = async(id:number)=>{
     const pool = await getPool()
     await pool
@@ -76,4 +93,5 @@ export const deleteUser = async(id:number)=>{
     .query("DELETE FROM Users WHERE id=@id")
     return{message:"User deleted successfully"}
 }
+
 

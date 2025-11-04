@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import * as userRepositories from '../repository/user.repository'
-import { newUser } from '../types/user.types'
+import { newUser, updateUser } from '../types/user.types'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 import { sendMail } from '../mailer/mailer'
@@ -127,3 +127,12 @@ export const deleteUser= async (id:number)=>{
     return results;
 }
 
+export const updateUserDetails = async(id:number, userData:Partial<updateUser>)=>{
+    const existingUser = await userRepositories.getUserById(id)
+    if(!existingUser){
+        throw new Error ('User not found')
+    }
+    const updatedUserData = {...existingUser,...userData}
+    const result = await userRepositories.updateUserProfile(updatedUserData)
+    return result;
+}
