@@ -49,5 +49,21 @@ export const deleteProductController = async (req: Request, res: Response) => {
          }         
       }
 }
+export const updateProductController = async (req: Request, res: Response) => {
+      const productId = parseInt(req.params.id);
+      const updatedProduct = req.body;
+      try {
+         const result = await productServices.updateProductService(productId, updatedProduct);
+         res.status(200).json(result);         
+      } catch (error:any) {
+         if (error.message === "Product not found") {
+            res.status(404).json({ error: error.message });
+         } else if (error.message === "Invalid product ID") {
+            res.status(400).json({ error: error.message });
+         } else { 
+            res.status(500).json({ message: "Internal server error", errorMessage: error.message });
+         }         
+      }
+}
 
    

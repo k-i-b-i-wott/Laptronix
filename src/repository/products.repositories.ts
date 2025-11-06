@@ -38,3 +38,18 @@ export const deleteProduct = async(productId: number)=>{
     .query("DELETE FROM Products WHERE productId = @productId");
     return { message: "Product deleted successfully" };
 }
+
+export const updateProduct = async(productId: number, updatedProduct: Product)=>{
+    const pool = await getPool();
+     await pool.request()   
+    .input("productId", productId)
+    .input("productName", updatedProduct.productName)
+    .input("productBrand", updatedProduct.productBrand)
+    .input("productImage", updatedProduct.productImage)
+    .input("stockQuantity", updatedProduct.stockQuantity)
+    .input("productDescription", updatedProduct.productDescription)
+    .input("productCategory", updatedProduct.productCategory)
+    .input("productPrice", updatedProduct.productPrice)
+    .query("UPDATE Products SET productName = @productName, productBrand = @productBrand, productImage = @productImage, stockQuantity = @stockQuantity, productDescription = @productDescription, productCategory = @productCategory, productPrice = @productPrice WHERE productId = @productId");
+    return { message: "Product updated successfully" };
+};

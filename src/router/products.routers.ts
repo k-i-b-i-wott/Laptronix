@@ -6,4 +6,5 @@ export const productsRoutes = (app:any)=>{
     app.get("/products/:id", productControllers.getProductByIdController);
     app.post("/products", productControllers.createProductController);
     app.delete("/products/:id", productControllers.deleteProductController);
+    app.patch("/products/:id", productControllers.updateProductController);
 }

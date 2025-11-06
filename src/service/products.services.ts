@@ -28,3 +28,16 @@ export const deleteProductService = async (productId: number)=>{
     const result = await productsRepositories.deleteProduct(productId);
     return result;
 }
+
+export const updateProductService = async (productId: number, updatedProduct: Product)=>{
+    if (!productId || isNaN(productId)) {
+        throw new Error("Invalid product ID");
+    }
+    const checkProduct = await productsRepositories.getProductById(productId);
+    if(!checkProduct){
+        throw new Error("Product not found");
+    }
+    const updatedFields = { ...checkProduct, ...updatedProduct };
+    const result = await productsRepositories.updateProduct(productId, updatedFields);
+    return result;
+}

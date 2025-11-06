@@ -8,4 +8,13 @@ export interface Product {
     productPrice : number;
 }
 
+export interface productUpdate {     
+    productName? : string;
+    productBrand? : string;
+    productImage? : string;
+    stockQuantity? : number;
+    productDescription? : string;
+    productCategory? : string;
+    productPrice? : number;
+}
 
