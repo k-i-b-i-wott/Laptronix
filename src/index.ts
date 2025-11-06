@@ -1,5 +1,6 @@
 import express, { json } from 'express'
  import { userRoutes } from './router/user.router'
+import { productsRoutes } from './router/products.routers'
 
 
 
@@ -10,9 +11,7 @@ const initiallizeAPP =() => {
     app.use(express.json())
 
     userRoutes(app);
-
-
-    
+    productsRoutes(app);   
 
     return app
 

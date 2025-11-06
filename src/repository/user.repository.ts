@@ -1,4 +1,4 @@
-import { error } from "console";
+
 import { getPool } from "../db/config";
 import { newUser, updateUser } from "../types/user.types";
 
