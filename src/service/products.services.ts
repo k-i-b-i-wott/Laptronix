@@ -15,3 +15,16 @@ export const createProductService = async (newProduct: Product)=>{
     const result = await productsRepositories.createProduct(newProduct);
     return result;
 }
+
+export const deleteProductService = async (productId: number)=>{
+
+    if (!productId || isNaN(productId)) {
+        throw new Error("Invalid product ID");
+    }
+    const checkProduct = await productsRepositories.getProductById(productId);
+    if(!checkProduct){
+        throw new Error("Product not found");
+    }
+    const result = await productsRepositories.deleteProduct(productId);
+    return result;
+}

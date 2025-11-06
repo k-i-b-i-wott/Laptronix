@@ -30,3 +30,11 @@ export const createProduct = async(newProduct:Product)=>{
     .query("INSERT INTO Products(productName, productBrand, productImage, stockQuantity, productDescription, productCategory, productPrice) VALUES (@productName, @productBrand, @productImage, @stockQuantity, @productDescription, @productCategory, @productPrice)");
     return { message: "Product created successfully" };
 }
+
+export const deleteProduct = async(productId: number)=>{
+    const pool = await getPool();
+     await pool.request()   
+    .input("productId", productId)
+    .query("DELETE FROM Products WHERE productId = @productId");
+    return { message: "Product deleted successfully" };
+}
