@@ -42,7 +42,7 @@ export const setVerificationCode = async(emailAddress:string, code:string)=>{
 }
 export const verifyUserEmail = async(emailAddress:string)=>{
     const pool = await getPool()
-    const result = await pool.request()
+     await pool.request()
     .input("emailAddress",emailAddress)    
     .query("UPDATE Users SET verificationCode=NULL, isVerified=1 WHERE emailAddress=@emailAddress");
     return {message:"Email verified successfully"};

@@ -1,5 +1,4 @@
 import dotenv from 'dotenv'
-import { Server } from 'http'
 
 import nodemailer from 'nodemailer'
 
