@@ -33,3 +33,20 @@ export const createOrder = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Internal server error", error });
      }
 }
+
+export const updateOrderStatus = async (req: Request, res: Response) => {
+    const orderId = parseInt(req.params.id);
+    const { status } = req.body;
+    try {
+        if (!status) {
+            return res.status(400).json({ message: "Status is required" });
+        }
+        const result = await ordersService.changeOrderStatus(orderId, status);
+        res.status(200).json(result);
+    } catch (error: any) {
+        if (error.message === "Order not found") {
+            return res.status(404).json({ message: "Order not found" });
+        }
+        res.status(500).json({ message: "Internal server error", error });
+    }
+}

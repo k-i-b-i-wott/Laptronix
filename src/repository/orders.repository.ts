@@ -1,5 +1,5 @@
 import { getPool } from "../db/config";
-import { Order } from "../types/orders.order";
+import { Order } from "../types/orders.types";
 
 
 export const getAllOrders = async ()=>{
@@ -26,3 +26,13 @@ export const createOrder = async (order: Order) => {
         .query('INSERT INTO Orders (UserId, ProductId, Quantity, TotalAmount) VALUES (@UserId, @ProductId, @Quantity, @TotalAmount); SELECT SCOPE_IDENTITY() AS OrderId;');
     return {message:"Order created successfully"};
 }
+
+export const updateOrderStatus = async (orderId: number, status: string) => {
+    const pool = await getPool();
+    await pool.request()
+        .input("OrderId", orderId)
+        .input("orderStatus", status)
+        .query("UPDATE Orders SET orderStatus = @orderStatus WHERE OrderId = @OrderId");
+    return { message: "Order status updated successfully" };
+}
+
