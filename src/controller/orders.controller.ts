@@ -50,3 +50,16 @@ export const updateOrderStatus = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Internal server error", error });
     }
 }
+
+export const deleteOrder = async (req: Request, res: Response) => {
+    const orderId = parseInt(req.params.id);
+    try {
+        const result = await ordersService.removeOrder(orderId);
+        res.status(200).json(result);
+    } catch (error: any) {
+        if (error.message === "Order not found") {
+            return res.status(404).json({ message: "Order not found" });
+        }
+        res.status(500).json({ message: "Internal server error", error });
+    }
+}

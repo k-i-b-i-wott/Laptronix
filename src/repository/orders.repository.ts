@@ -36,3 +36,10 @@ export const updateOrderStatus = async (orderId: number, status: string) => {
     return { message: "Order status updated successfully" };
 }
 
+export const deleteOrder = async (orderId: number) => {
+    const pool = await getPool();
+    await pool.request()
+        .input("OrderId", orderId)
+        .query("DELETE FROM Orders WHERE OrderId = @OrderId");
+    return { message: "Order deleted successfully" };
+}

@@ -51,9 +51,14 @@ CREATE TABLE Orders(
     totalAmount DECIMAL(10, 2) NOT NULL,
     orderStatus VARCHAR(20) NOT NULL DEFAULT 'Pending',
     FOREIGN KEY (userId) REFERENCES Users(id),
-    FOREIGN KEY (productId) REFERENCES Products(productId)
-
+    FOREIGN KEY (productId) REFERENCES Products(productId) 
+  
 )
+
+ALTER TABLE Orders 
+ADD CONSTRAINT FK_Orders_Users FOREIGN KEY (userId) REFERENCES Users(id) ON DELETE CASCADE,
+    CONSTRAINT FK_Orders_Products FOREIGN KEY (productId) REFERENCES Products(productId) ON DELETE CASCADE;
+
 -- DROP TABLE IF EXISTS Orders;
 INSERT INTO Orders(userId,productId,quantity,totalAmount)
 VALUES(1011,1,2,1999.98)
