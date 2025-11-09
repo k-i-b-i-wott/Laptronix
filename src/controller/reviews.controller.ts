@@ -25,3 +25,12 @@ export const getReview = async (req:Request,res:Response) => {
         res.status(500).json({"Internal server error":error.message});
     }
 }
+export const createReview = async (req:Request,res:Response) => {
+    const reviewData = req.body;
+    try {
+        const newReview = await reviewsServices.addNewReview(reviewData);
+        res.status(201).json(newReview);
+    } catch (error:any) {
+        res.status(500).json({"Internal server error":error.message});
+    }
+}
